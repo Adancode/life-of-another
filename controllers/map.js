@@ -25,6 +25,26 @@ exports.getEditLifeMap = (req, res, next) => {
 };
 
 /**
+ * POST /map/edit-life-map
+ * Edit my life map info page.
+ */
+exports.postEditLifeMap = (req, res, next) => {
+    res.render('map/edit-life-map', {
+        title: 'Edit My Life Map'
+    });
+};
+
+/**
+ * PUT /map/edit-life-map
+ * Edit my life map info page.
+ */
+exports.putEditLifeMap = (req, res, next) => {
+    res.render('map/edit-life-map', {
+        title: 'Edit My Life Map'
+    });
+};
+
+/**
  * GET /map/persons
  * View list of persons available page.
  */
