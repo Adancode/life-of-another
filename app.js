@@ -57,7 +57,7 @@ mongoose.connection.on('error', () => {
  */
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'jade');
 app.use(compression());
 app.use(sass({
   src: path.join(__dirname, 'public'),
