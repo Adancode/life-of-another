@@ -129,10 +129,10 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 /**
  *  Map Routes.
  */
-app.get('/map/my-life-map', mapController.getMyLifeMap);
-app.get('/map/edit-life-map', mapController. getEditLifeMap);
-app.get('/map/persons', mapController.getPersons);
-app.get('/map/persons/:person', mapController.getPersonLifeMap);
+app.get('/my-life-map', mapController.getMyLifeMap);
+app.get('/edit-life-map', mapController. getEditLifeMap);
+app.get('/persons', mapController.getPersons);
+app.get('/persons/:person', mapController.getPersonLifeMap);
 
 /**
  * API examples routes.
