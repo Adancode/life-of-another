@@ -1,0 +1,30 @@
+extends ../layout
+
+block content
+  style.
+    #map {
+      width: 100%;
+      height: 500px;
+    }
+
+  .page-header
+    h2
+      i.fa.fa-google
+      | Google Maps API
+
+  .btn-group.btn-group-justified
+    a.btn.btn-primary(href='https://developers.google.com/maps/documentation/javascript/tutorial', target='_blank')
+      i.fa.fa-check-square-o
+      | Getting Started
+    a.btn.btn-primary(href='https://console.developers.google.com/apis/dashboard', target='_blank')
+      i.fa.fa-laptop
+      | API Console
+
+  h3 Markers Example
+
+  #map
+
+  script(src="/js/googleMaps.js")
+
+  script(src='https://maps.googleapis.com/maps/api/js?key=' + process.env.GOOGLE_MAPS_API_KEY + '&callback=initMap')
+
