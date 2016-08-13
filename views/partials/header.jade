@@ -11,16 +11,20 @@
         | Life of Another
     .collapse.navbar-collapse
       ul.nav.navbar-nav
-        li(class=(title == 'Persons') ? 'active' : undefined)
-          a(href='/persons') Persons
-        li(class=(title == 'My Life Map') ? 'active' : undefined)
-          a(href='/my-life-map') My Life Map
-        li(class=(title == 'Edit Life Map') ? 'active' : undefined)
-          a(href='/edit-life-map') Edit Life Map
-        li(class=(title == 'API Examples') ? 'active' : undefined)
-          a(href='/api') Api Examples
-        li(class=(title == 'Contact') ? 'active' : undefined)
-          a(href='/contact') Contact
+        if !user
+          li(class=(title == 'Persons') ? 'active' : undefined)
+            a(href='/persons') Persons
+          li(class=(title == 'Contact') ? 'active' : undefined)
+            a(href='/contact') Contact
+        else
+          li(class=(title == 'Persons') ? 'active' : undefined)
+            a(href='/persons') Persons
+          li(class=(title == 'My Life Map') ? 'active' : undefined)
+            a(href='/my-life-map') My Life Map
+          li(class=(title == 'Edit Life Map') ? 'active' : undefined)
+            a(href='/edit-life-map') Edit Life Map
+          li(class=(title == 'Contact') ? 'active' : undefined)
+            a(href='/contact') Contact
       ul.nav.navbar-nav.navbar-right
         if !user
           li(class=(title == 'Login') ? 'active' : undefined)
