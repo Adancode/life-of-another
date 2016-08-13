@@ -13,7 +13,7 @@ const lifeMarkerSchema = new mongoose.Schema({
         locationName: String,
         address: String,
         lat: Number,
-        long: Number
+        lng: Number
     },
     description: String,
     private: Boolean
