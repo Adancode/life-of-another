@@ -191,11 +191,14 @@ exports.postUpdateLifeMarker = (req, res, next) => {
 
 /**
  * GET /map/persons
- * View list of persons available page.
+ * View map of all persons life markers page.
  */
 exports.getPersons = (req, res, next) => {
-    res.render('map/persons', {
-        title: 'Person Life Map'
+    LifeMarker.find({}, {'location': 1, '_id': 0}, (err, docs) => {
+        res.render('map/persons', {
+            title: 'Life of All',
+            lifeMarkers: docs
+        });
     });
 };
 
