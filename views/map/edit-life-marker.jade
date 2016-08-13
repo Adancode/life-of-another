@@ -44,10 +44,10 @@ block content
         button.btn.btn.btn-primary(type='submit')
           i.fa.fa-pencil
           | Update Life Marker
-      .col-sm-offset-0.col-sm-4
-        form.form-horizontal(action='/map/edit-life-marker/delete-life-marker', method='POST')
-          input(type='hidden', name='_csrf', value=_csrf)
-          input(type='hidden', name='lifeMarker-id', id='lifeMarker-id', value='#{lifeMarker.id}')
-          button.btn.btn.btn-primary(type='submit')
-            i.fa.fa-pencil
-              | Delete Life Marker
+  .col-sm-3
+  form.form-horizontal(action='/map/edit-life-marker/delete-life-marker', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    input(type='hidden', name='lifeMarker-id', id='lifeMarker-id', value='#{lifeMarker.id}')
+    button.btn.btn.btn-primary(type='submit')
+      i.fa.fa-pencil
+        | Delete Life Marker

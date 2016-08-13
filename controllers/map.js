@@ -141,7 +141,7 @@ exports.postEditLifeMarker = (req, res, next) => {
 /**
  * POST /map/edit-life-marker/update-life-marker
  *
- * Edit life marker chosen.
+ * Update life marker chosen.
  */
 exports.postUpdateLifeMarker = (req, res, next) => {
     req.assert('title', 'Title cannot be empty').notEmpty();
@@ -189,6 +189,23 @@ exports.postUpdateLifeMarker = (req, res, next) => {
         });
 };
 
+/**
+ * POST /map/edit-life-marker/delete-life-marker
+ *
+ * Delete life marker chosen.
+ */
+exports.postDeleteLifeMarker = (req, res, next) => {
+    const lifeMarker = req.body['lifeMarker-id'];
+    LifeMarker.remove({_id: lifeMarker}, (err, doc) => {
+        if (err) {
+            return next(err);
+        }
+        req.flash('success', { msg: 'Life Marker has been deleted.' });
+        res.redirect('/edit-life-map');
+    });
+};
+
+/**
 /**
  * GET /map/persons
  * View map of all persons life markers page.
