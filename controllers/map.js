@@ -3,8 +3,9 @@ const _ = require('lodash');
 const async = require('async');
 const validator = require('validator');
 const request = require('request');
-const Map = require('../models/Map');
+const gmAPI = require('googlemaps');
 const LifeMarker = require('../models/LifeMarker');
+const User = require('../models/User');
 
 /**
  * GET /map/my-life-map
@@ -30,7 +31,7 @@ exports.getEditLifeMap = (req, res, next) => {
  * POST /map/edit-life-map/create-marker
  * Create a new life marker.
  */
-exports.postEditLifeMap = (req, res, next) => {
+exports.postCreateNewLifeMarker = (req, res, next) => {
     req.assert('title', 'Title cannot be empty').notEmpty();
     req.assert('date-from', 'Date from cannot be empty').notEmpty();
     req.assert('date-to', 'Date to cannot be empty').notEmpty();
@@ -49,7 +50,7 @@ exports.postEditLifeMap = (req, res, next) => {
         title: req.body.title,
         dates: {
             from: req.body['date-from'],
-            to: req.body['date-to'],
+            to: req.body['date-to']
         },
         location: {
             locationName: req.body['location-name'],
@@ -63,12 +64,7 @@ exports.postEditLifeMap = (req, res, next) => {
 
     lifeMarker.save((err) => {
         if (err) { return next(err); }
-        req.logIn(user, (err) => {
-            if (err) {
-                return next(err);
-            }
-            res.redirect('/');
-        });
+        res.redirect('/edit-life-map');
     });
 };
 
