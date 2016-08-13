@@ -131,6 +131,7 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
  */
 app.get('/my-life-map', mapController.getMyLifeMap);
 app.get('/edit-life-map', mapController. getEditLifeMap);
+app.post('/map/edit-life-map/create-marker', passportConfig.isAuthenticated, mapController.postCreateNewLifeMarker);
 app.get('/persons', mapController.getPersons);
 app.get('/persons/:person', mapController.getPersonLifeMap);
 
