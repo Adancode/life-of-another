@@ -14,10 +14,10 @@ block content
     .form-group
       label.col-sm-3.control-label(for='date-from') Date From
       .col-sm-7
-        input.form-control(type='text', name='date-from', id='date-from', value='#{moment(lifeMarker.dates.from).format("DD-MM-YYYY")}', placeholder='Date you got there(MM-DD-YYYY)')
+        input.form-control(type='text', name='date-from', id='date-from', value='#{moment(lifeMarker.dates.from).format("MM-DD-YYYY")}', placeholder='Date you got there(MM-DD-YYYY)')
       label.col-sm-3.control-label(for='date-to') Date To
       .col-sm-7
-        input.form-control(type='text', name='date-to', id='date-to', value='#{moment(lifeMarker.dates.to).format("DD-MM-YYYY")}', placeholder='Date you left there(MM-DD-YYYY)')
+        input.form-control(type='text', name='date-to', id='date-to', value='#{moment(lifeMarker.dates.to).format("MM-DD-YYYY")}', placeholder='Date you left there(MM-DD-YYYY)')
     .form-group
       label.col-sm-3.control-label(for='location-name') Location Name
       .col-sm-7
@@ -44,3 +44,10 @@ block content
         button.btn.btn.btn-primary(type='submit')
           i.fa.fa-pencil
           | Update Life Marker
+      .col-sm-offset-0.col-sm-4
+        form.form-horizontal(action='/map/edit-life-marker/delete-life-marker', method='POST')
+          input(type='hidden', name='_csrf', value=_csrf)
+          input(type='hidden', name='lifeMarker-id', id='lifeMarker-id', value='#{lifeMarker.id}')
+          button.btn.btn.btn-primary(type='submit')
+            i.fa.fa-pencil
+              | Delete Life Marker
