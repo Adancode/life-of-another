@@ -116,12 +116,17 @@ exports.postCreateNewLifeMarker = (req, res, next) => {
 };
 
 /**
- * PUT /map/edit-life-map/:life-marker
+ * POST /map/edit-life-marker/:life-marker
  * Edit life marker chosen.
  */
-exports.putEditLifeMap = (req, res, next) => {
-    res.render('map/edit-life-map', {
-        title: 'Edit My Life Map'
+exports.postEditLifeMarker = (req, res, next) => {
+    const lifeMarker = req.body['life-marker'];
+    LifeMarker.findById(lifeMarker, (err, doc) => {
+        if (err) { return next(err); }
+        res.render('map/edit-life-marker', {
+            title: 'Edit Life Marker',
+            lifeMarker: doc
+        });
     });
 };
 
