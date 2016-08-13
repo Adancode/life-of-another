@@ -4,7 +4,7 @@ block content
   .page-header
     h3 Edit Life Marker
 
-  form.form-horizontal(action='/map/edit-life-map/update-life-marker', method='POST')
+  form.form-horizontal(action='/map/edit-life-marker/update-life-marker', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     input(type='hidden', name='marker-id', id='marker-id', value='#{lifeMarker.id}')
     .form-group
