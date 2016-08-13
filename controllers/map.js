@@ -81,7 +81,7 @@ exports.postCreateNewLifeMarker = (req, res, next) => {
 
     getGoogleMapsInstance()
         .then(function (gmAPI) {
-           return getGeocodedValues(gmAPI, req, res, next);
+            return getGeocodedValues(gmAPI, req, res, next);
         })
         .then(function (results) {
             const errors = req.validationErrors();
@@ -109,25 +109,80 @@ exports.postCreateNewLifeMarker = (req, res, next) => {
             });
 
             lifeMarker.save((err) => {
-                if (err) { return next(err); }
+                if (err) {
+                    return next(err);
+                }
                 res.redirect('/edit-life-map');
             });
         });
 };
 
 /**
- * POST /map/edit-life-marker/:life-marker
- * Edit life marker chosen.
+ * POST /map/edit-life-marker
+ * Edit life marker chosen page pre-populated with chose life-marker data.
  */
 exports.postEditLifeMarker = (req, res, next) => {
     const lifeMarker = req.body['life-marker'];
     LifeMarker.findById(lifeMarker, (err, doc) => {
-        if (err) { return next(err); }
+        if (err) {
+            return next(err);
+        }
         res.render('map/edit-life-marker', {
             title: 'Edit Life Marker',
             lifeMarker: doc
         });
     });
+};
+
+/**
+ * POST /map/edit-life-marker/update-life-marker
+ *
+ * Edit life marker chosen.
+ */
+exports.postUpdateLifeMarker = (req, res, next) => {
+    req.assert('title', 'Title cannot be empty').notEmpty();
+    req.assert('date-from', 'Date from cannot be empty').notEmpty();
+    req.assert('date-to', 'Date to cannot be empty').notEmpty();
+    req.assert('location-name', 'Location name cannot be empty').notEmpty();
+    req.assert('location-address', 'Location address cannot be empty').notEmpty();
+
+    getGoogleMapsInstance()
+        .then(function (gmAPI) {
+            return getGeocodedValues(gmAPI, req, res, next);
+        })
+        .then(function (results) {
+            const errors = req.validationErrors();
+
+            if (errors) {
+                req.flash('errors', errors);
+                return res.redirect('/edit-life-map');
+            }
+
+            LifeMarker.findById(req.body['lifeMarker-id'], (err, lifeMarker) => {
+                if (err) {
+                    return next(err);
+                }
+                lifeMarker.title = req.body.title;
+                lifeMarker.dates = {
+                    from: req.body['date-from'],
+                    to: req.body['date-to']
+                };
+                lifeMarker.location = {
+                    locationName: req.body['location-name'],
+                    address: results.formatted_address,
+                    lat: results.lat,
+                    lng: results.lng
+                };
+                lifeMarker.description = req.body.description;
+                lifeMarker.private = req.body.private;
+
+                lifeMarker.save((err) => {
+                    if (err) {return next(err);}
+                    req.flash('success', { msg: 'Life Marker has been changed.' });
+                    res.redirect('/edit-life-map');
+                });
+            });
+        });
 };
 
 /**
