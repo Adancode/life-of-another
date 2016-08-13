@@ -6,6 +6,7 @@ const request = require('request');
 const GoogleMapsAPI = require('googlemaps');
 const LifeMarker = require('../models/LifeMarker');
 const User = require('../models/User');
+const mongoose = require('mongoose');
 
 function getGoogleMapsInstance() {
     return new Promise(function (res, rej) {
@@ -50,8 +51,11 @@ function getGeocodedValues(gmAPI, req, res, next) {
  * Viewing my life map page.
  */
 exports.getMyLifeMap = (req, res, next) => {
-    res.render('map/my-life-map', {
-        title: 'My Life Map'
+    LifeMarker.find({'marker_id' : req.user.id}, {'location': 1, '_id': 0}, (err, docs) => {
+        res.render('map/my-life-map', {
+            title: 'My Life Map',
+            lifeMarkers: docs
+        });
     });
 };
 
