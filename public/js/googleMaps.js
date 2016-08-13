@@ -1,5 +1,12 @@
 var map;
-var superchargers = [
+var lifeMarkers1 = [
+    {
+        latitude: 37.49267,
+        longitude: -121.94409
+    }
+];
+
+var lifeMarkers2 = [
     {
         location: 'Fremont',
         latitude: 37.49267,
@@ -108,13 +115,19 @@ var superchargers = [
     }
 ];
 
+console.log(lifeMarkers1);
+console.log('1');
+console.log(lifeMarkers);
+console.log('2');
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 36.0907578, lng: -119.5948303},
-        zoom: 7
+        center: {lat: 0, lng: 0},
+        zoom: 2,
+        minZoom: 1
     });
 
-    superchargers.forEach(function (sc) {
+    lifeMarkers.forEach(function (sc) {
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(sc.latitude, sc.longitude),
             icon: {
