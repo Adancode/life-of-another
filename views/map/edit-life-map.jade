@@ -13,21 +13,21 @@ block content
     .form-group
       label.col-sm-3.control-label(for='title') Title
       .col-sm-7
-        input.form-control(type='text', name='title', id='title', value='', placeholder='Name for your life event')
+        input.form-control(type='text', name='title', id='title', value='Test Event', placeholder='Name for your life event')
     .form-group
       label.col-sm-3.control-label(for='date-from') Date From
       .col-sm-7
-        input.form-control(type='text', name='date-from', id='date-from', value='', placeholder='Date you got there(MM-DD-YYYY)')
+        input.form-control(type='text', name='date-from', id='date-from', value='11-11-2011', placeholder='Date you got there(MM-DD-YYYY)')
       label.col-sm-3.control-label(for='date-to') Date To
       .col-sm-7
-        input.form-control(type='text', name='date-to', id='date-to', value='', placeholder='Date you left there(MM-DD-YYYY)')
+        input.form-control(type='text', name='date-to', id='date-to', value='11-12-2012', placeholder='Date you left there(MM-DD-YYYY)')
     .form-group
       label.col-sm-3.control-label(for='location-name') Location Name
       .col-sm-7
-        input.form-control(type='text', name='location-name', id='location-name', value='', placeholder='Give your location a name')
+        input.form-control(type='text', name='location-name', id='location-name', value='Austin', placeholder='Give your location a name')
       label.col-sm-3.control-label(for='location-address') Location Address
       .col-sm-7
-        input.form-control(type='text', name='location-address', id='location-address', value='', placeholder='Location you went to')
+        input.form-control(type='text', name='location-address', id='location-address', value='Austin, Tx', placeholder='Location you went to')
     .form-group
       label(class='col-sm-2 control-label', for='description') Description
       .col-sm-8
@@ -52,12 +52,7 @@ block content
 
   form.form-horizontal(action='/map/edit-life-map/create-marker/:life-marker', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
-    .form-group
-      label(class='col-sm-2 control-label', for='life-marker') Name of Marker
-      .col-sm-8
-        input.form-control(type='text', name='life-marker', id='life-marker', autofocus=true)
-    .form-group
-      .col-sm-offset-2.col-sm-8
-        button.btn.btn-primary(type='submit')
-          i.fa.fa-check-square
-          | Edit Life Marker
+    for marker in lifeMarkers
+      button.btn.btn-primary(type='submit')
+        i.fa.fa-check-square
+          | #{marker.title}
