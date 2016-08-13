@@ -3,9 +3,47 @@ const _ = require('lodash');
 const async = require('async');
 const validator = require('validator');
 const request = require('request');
-const gmAPI = require('googlemaps');
+const GoogleMapsAPI = require('googlemaps');
 const LifeMarker = require('../models/LifeMarker');
 const User = require('../models/User');
+
+function getGoogleMapsInstance() {
+    return new Promise(function (res, rej) {
+        var gmConfig = {
+            key: process.env.GOOGLE_MAPS_API_KEY
+        };
+        res(new GoogleMapsAPI(gmConfig));
+    });
+}
+
+function getGeocodedValues(gmAPI, req, res, next) {
+    return new Promise(function (res, rej) {
+        var geocodeParams = {
+            "address": req.body['location-address']
+        };
+
+        gmAPI.geocode(geocodeParams, function (err, result) {
+            var results = {
+                formatted_address: '',
+                lat: 30.267153,
+                lng: -97.938383
+            };
+
+            results.formatted_address = result.results[0].formatted_address;
+            results.lat = result.results[0].geometry.location.lat;
+            results.lng = result.results[0].geometry.location.lng;
+
+            // console.log(result);
+            // console.log(results);
+
+            if (results.formatted_address != '') {
+                res(results);
+            } else {
+                rej(req.flash('failure'), {msg: 'Invalid Address'});
+            }
+        });
+    });
+}
 
 /**
  * GET /map/my-life-map
@@ -38,34 +76,40 @@ exports.postCreateNewLifeMarker = (req, res, next) => {
     req.assert('location-name', 'Location name cannot be empty').notEmpty();
     req.assert('location-address', 'Location address cannot be empty').notEmpty();
 
-    const errors = req.validationErrors();
+    getGoogleMapsInstance()
+        .then(function (gmAPI) {
+           return getGeocodedValues(gmAPI, req, res, next);
+        })
+        .then(function (results) {
+            const errors = req.validationErrors();
 
-    if (errors) {
-        req.flash('errors', errors);
-        return res.redirect('/edit-life-map');
-    }
+            if (errors) {
+                req.flash('errors', errors);
+                return res.redirect('/edit-life-map');
+            }
 
-    const lifeMarker = new LifeMarker({
-        marker_id: req.body['user-id'],
-        title: req.body.title,
-        dates: {
-            from: req.body['date-from'],
-            to: req.body['date-to']
-        },
-        location: {
-            locationName: req.body['location-name'],
-            address: req.body['location-address'],
-            lat: 300.00,
-            long: 300.25
-        },
-        description: req.body.description,
-        private: req.body.private
-    });
+            const lifeMarker = new LifeMarker({
+                marker_id: req.body['user-id'],
+                title: req.body.title,
+                dates: {
+                    from: req.body['date-from'],
+                    to: req.body['date-to']
+                },
+                location: {
+                    locationName: req.body['location-name'],
+                    address: results.formatted_address,
+                    lat: results.lat,
+                    lng: results.lng
+                },
+                description: req.body.description,
+                private: req.body.private
+            });
 
-    lifeMarker.save((err) => {
-        if (err) { return next(err); }
-        res.redirect('/edit-life-map');
-    });
+            lifeMarker.save((err) => {
+                if (err) { return next(err); }
+                res.redirect('/edit-life-map');
+            });
+        });
 };
 
 /**
