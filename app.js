@@ -135,6 +135,7 @@ app.get('/my-life-map', passportConfig.isAuthenticated, mapController.getMyLifeM
 app.get('/edit-life-map', passportConfig.isAuthenticated, mapController. getEditLifeMap);
 app.post('/map/edit-life-map/create-marker', passportConfig.isAuthenticated, mapController.postCreateNewLifeMarker);
 app.post('/map/edit-life-marker', passportConfig.isAuthenticated, mapController.postEditLifeMarker);
+app.post('/map/edit-life-marker/update-life-marker', passportConfig.isAuthenticated, mapController.postUpdateLifeMarker);
 app.get('/persons', mapController.getPersons);
 app.get('/persons/:person', mapController.getPersonLifeMap);
 
