@@ -35,10 +35,10 @@ block content
       label.col-sm-3.control-label(for='private') Private
       .col-sm-6
         label.radio.col-sm-3
-          input(type='radio', checked=user.profile.gender == 'private', name='private', value='private', data-toggle='radio')
+          input(type='radio', name='private', value='private', data-toggle='radio')
           span Private
         label.radio.col-sm-3
-          input(type='radio', checked=user.profile.gender == 'not-private', name='private', value='not-private', data-toggle='radio')
+          input(type='radio', name='private', value='not-private', data-toggle='radio' checked)
           span Not Private
     .form-group
       .col-sm-offset-3.col-sm-4
