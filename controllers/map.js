@@ -64,7 +64,7 @@ exports.getMyLifeMap = (req, res, next) => {
  * Edit my life map info page.
  */
 exports.getEditLifeMap = (req, res, next) => {
-    LifeMarker.find((err, docs) => {
+    LifeMarker.find({'marker_id' : req.user.id}, (err, docs) => {
         res.render('map/edit-life-map', {
             title: 'Edit My Life Map',
             lifeMarkers: docs
