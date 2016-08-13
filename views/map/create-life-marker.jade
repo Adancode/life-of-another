@@ -53,6 +53,6 @@ block content
   form.form-horizontal(action='/map/edit-life-map/create-marker/:life-marker', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     for marker in lifeMarkers
-      button.btn.btn-primary(type='submit')
+      button.btn.btn-primary(type='submit' name='life-marker' value='#{marker._id}')
         i.fa.fa-check-square
           | #{marker.title}
