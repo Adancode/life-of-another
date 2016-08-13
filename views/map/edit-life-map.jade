@@ -5,22 +5,22 @@ block content
     h3 Edit Life Map
 
   .page-header
-    h4 Create New Life Marker
+    h4 Create New Life Marker #{user.id}
 
   form.form-horizontal(action='/map/edit-life-map/create-marker', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
+    input(type='hidden', name='user-id', id='user-id', value='#{user.id}')
     .form-group
       label.col-sm-3.control-label(for='title') Title
       .col-sm-7
         input.form-control(type='text', name='title', id='title', value='', placeholder='Name for your life event')
-        input.form-control(type='hidden', id='user-id', value='#{user.id}')
     .form-group
       label.col-sm-3.control-label(for='date-from') Date From
       .col-sm-7
-        input.form-control(type='text', name='date-from', id='date-from', value='', placeholder='Date you got there')
+        input.form-control(type='text', name='date-from', id='date-from', value='', placeholder='Date you got there(MM-DD-YYYY)')
       label.col-sm-3.control-label(for='date-to') Date To
       .col-sm-7
-        input.form-control(type='text', name='date-to', id='date-to', value='', placeholder='Date you left there')
+        input.form-control(type='text', name='date-to', id='date-to', value='', placeholder='Date you left there(MM-DD-YYYY)')
     .form-group
       label.col-sm-3.control-label(for='location-name') Location Name
       .col-sm-7
@@ -36,16 +36,16 @@ block content
       label.col-sm-3.control-label(for='private') Private
       .col-sm-6
         label.radio.col-sm-3
-          input(type='radio', name='private', value=true, data-toggle='radio')
+          input(type='radio', name='private', value='true', data-toggle='radio')
           span Private
         label.radio.col-sm-3
-          input(type='radio', name='private', value=false, data-toggle='radio' checked)
+          input(type='radio', name='private', value='false', data-toggle='radio' checked)
           span Not Private
     .form-group
       .col-sm-offset-3.col-sm-4
         button.btn.btn.btn-primary(type='submit')
           i.fa.fa-pencil
-          | Update Life Marker
+          | Create Life Marker
 
   .page-header
     h4 Choose an Existing Life Marker to Edit
@@ -60,4 +60,4 @@ block content
       .col-sm-offset-2.col-sm-8
         button.btn.btn-primary(type='submit')
           i.fa.fa-check-square
-          | Edit
+          | Edit Life Marker
