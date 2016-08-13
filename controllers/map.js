@@ -60,8 +60,11 @@ exports.getMyLifeMap = (req, res, next) => {
  * Edit my life map info page.
  */
 exports.getEditLifeMap = (req, res, next) => {
-    res.render('map/edit-life-map', {
-        title: 'Edit My Life Map'
+    LifeMarker.find((err, docs) => {
+        res.render('map/edit-life-map', {
+            title: 'Edit My Life Map',
+            lifeMarkers: docs
+        });
     });
 };
 
