@@ -43,6 +43,8 @@ const passportConfig = require('./config/passport');
  */
 const app = express();
 
+app.locals.moment = require('moment');
+
 /**
  * Connect to MongoDB.
  */
