@@ -13,6 +13,7 @@ block content
       label.col-sm-3.control-label(for='title') Title
       .col-sm-7
         input.form-control(type='text', name='title', id='title', value='', placeholder='Name for your life event')
+        input.form-control(type='hidden', id='user-id', value='#{user.id}')
     .form-group
       label.col-sm-3.control-label(for='date-from') Date From
       .col-sm-7
@@ -35,10 +36,10 @@ block content
       label.col-sm-3.control-label(for='private') Private
       .col-sm-6
         label.radio.col-sm-3
-          input(type='radio', name='private', value='private', data-toggle='radio')
+          input(type='radio', name='private', value=true, data-toggle='radio')
           span Private
         label.radio.col-sm-3
-          input(type='radio', name='private', value='not-private', data-toggle='radio' checked)
+          input(type='radio', name='private', value=false, data-toggle='radio' checked)
           span Not Private
     .form-group
       .col-sm-offset-3.col-sm-4
