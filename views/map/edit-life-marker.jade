@@ -6,7 +6,7 @@ block content
 
   form.form-horizontal(action='/map/edit-life-marker/update-life-marker', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
-    input(type='hidden', name='marker-id', id='marker-id', value='#{lifeMarker.id}')
+    input(type='hidden', name='lifeMarker-id', id='lifeMarker-id', value='#{lifeMarker.id}')
     .form-group
       label.col-sm-3.control-label(for='title') Title
       .col-sm-7
