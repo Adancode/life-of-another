@@ -2,10 +2,7 @@ extends ../layout
 
 block content
   .page-header
-    h3 Edit Life Map
-
-  .page-header
-    h4 Create New Life Marker
+    h3 Edit Life Marker #{lifeMarker}
 
   form.form-horizontal(action='/map/edit-life-map/create-marker', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
@@ -32,7 +29,6 @@ block content
       label(class='col-sm-2 control-label', for='description') Description
       .col-sm-8
         textarea.form-control(name='description', id='description', rows='7', placeholder='Describe your experience/life event')
-          | Hello World!
     .form-group
       label.col-sm-3.control-label(for='private') Private
       .col-sm-6
@@ -47,13 +43,3 @@ block content
         button.btn.btn.btn-primary(type='submit')
           i.fa.fa-pencil
           | Create Life Marker
-
-  .page-header
-    h4 Choose an Existing Life Marker to Edit
-
-  form.form-horizontal(action='/map/edit-life-marker', method='POST')
-    input(type='hidden', name='_csrf', value=_csrf)
-    for marker in lifeMarkers
-      button.btn.btn-primary(type='submit' name='life-marker' value='#{marker._id}')
-        i.fa.fa-check-square
-          | #{marker.title}
