@@ -43,6 +43,8 @@ const passportConfig = require('./config/passport');
  */
 const app = express();
 
+app.locals.moment = require('moment');
+
 /**
  * Connect to MongoDB.
  */
@@ -57,7 +59,7 @@ mongoose.connection.on('error', () => {
  */
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'jade');
 app.use(compression());
 app.use(sass({
   src: path.join(__dirname, 'public'),
@@ -88,6 +90,7 @@ app.use((req, res, next) => {
 });
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
+//Passes user to all jade files so logged in User can be accessed
 app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
@@ -129,10 +132,13 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 /**
  *  Map Routes.
  */
-app.get('/map/my-life-map', mapController.getMyLifeMap);
-app.get('/map/edit-life-map', mapController. getEditLifeMap);
-app.get('/map/persons', mapController.getPersons);
-app.get('/map/persons/:person', mapController.getPersonLifeMap);
+app.get('/my-life-map', passportConfig.isAuthenticated, mapController.getMyLifeMap);
+app.get('/edit-life-map', passportConfig.isAuthenticated, mapController. getEditLifeMap);
+app.post('/map/edit-life-map/create-marker', passportConfig.isAuthenticated, mapController.postCreateNewLifeMarker);
+app.post('/map/edit-life-marker', passportConfig.isAuthenticated, mapController.postEditLifeMarker);
+app.post('/map/edit-life-marker/update-life-marker', passportConfig.isAuthenticated, mapController.postUpdateLifeMarker);
+app.get('/persons', mapController.getPersons);
+app.get('/persons/:person', mapController.getPersonLifeMap);
 
 /**
  * API examples routes.
