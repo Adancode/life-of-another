@@ -4,22 +4,59 @@ block content
   .page-header
     h3 Edit Life Map
 
-  form.form-horizontal(method='POST')
+  .page-header
+    h4 Create New Life Marker
+
+  form.form-horizontal(action='/map/edit-life-map/create-marker', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
-      label(class='col-sm-2 control-label', for='name') Name
-      .col-sm-8
-        input.form-control(type='text', name='name', id='name', autofocus=true)
+      label.col-sm-3.control-label(for='title') Title
+      .col-sm-7
+        input.form-control(type='text', name='title', id='title', value='', placeholder='Name for your life event')
     .form-group
-      label(class='col-sm-2 control-label', for='email') Email
-      .col-sm-8
-        input.form-control(type='text', name='email', id='email')
+      label.col-sm-3.control-label(for='date-from') Date From
+      .col-sm-7
+        input.form-control(type='text', name='date-from', id='date-from', value='', placeholder='Date you got there')
+      label.col-sm-3.control-label(for='date-to') Date To
+      .col-sm-7
+        input.form-control(type='text', name='date-to', id='date-to', value='', placeholder='Date you left there')
     .form-group
-      label(class='col-sm-2 control-label', for='message') Body
+      label.col-sm-3.control-label(for='location-name') Location Name
+      .col-sm-7
+        input.form-control(type='text', name='location-name', id='location-name', value='', placeholder='Give your location a name')
+      label.col-sm-3.control-label(for='location-address') Location Address
+      .col-sm-7
+        input.form-control(type='text', name='location-address', id='location-address', value='', placeholder='Location you went to')
+    .form-group
+      label(class='col-sm-2 control-label', for='location-description') Description
       .col-sm-8
-        textarea.form-control(name='message', id='message', rows='7')
+        textarea.form-control(name='location-description', id='location-description', rows='7', placeholder='Describe your experience/life event')
+    .form-group
+      label.col-sm-3.control-label(for='private') Private
+      .col-sm-6
+        label.radio.col-sm-3
+          input(type='radio', checked=user.profile.gender == 'private', name='private', value='private', data-toggle='radio')
+          span Private
+        label.radio.col-sm-3
+          input(type='radio', checked=user.profile.gender == 'not-private', name='private', value='not-private', data-toggle='radio')
+          span Not Private
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-pencil
+          | Update Life Marker
+
+  .page-header
+    h4 Choose an Existing Life Marker to Edit
+
+  form.form-horizontal(action='/map/edit-life-map/create-marker/:life-marker', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label(class='col-sm-2 control-label', for='life-marker') Name of Marker
+      .col-sm-8
+        input.form-control(type='text', name='life-marker', id='life-marker', autofocus=true)
     .form-group
       .col-sm-offset-2.col-sm-8
         button.btn.btn-primary(type='submit')
-          i.fa.fa-envelope
+          i.fa.fa-check-square
           | Send
