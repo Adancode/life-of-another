@@ -2,44 +2,45 @@ extends ../layout
 
 block content
   .page-header
-    h3 Edit Life Marker #{lifeMarker}
+    h3 Edit Life Marker
 
-  form.form-horizontal(action='/map/edit-life-map/create-marker', method='POST')
+  form.form-horizontal(action='/map/edit-life-map/update-life-marker', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
-    input(type='hidden', name='user-id', id='user-id', value='#{user.id}')
+    input(type='hidden', name='marker-id', id='marker-id', value='#{lifeMarker.id}')
     .form-group
       label.col-sm-3.control-label(for='title') Title
       .col-sm-7
-        input.form-control(type='text', name='title', id='title', value='Test Event', placeholder='Name for your life event')
+        input.form-control(type='text', name='title', id='title', value='#{lifeMarker.title}', placeholder='Name for your life event')
     .form-group
       label.col-sm-3.control-label(for='date-from') Date From
       .col-sm-7
-        input.form-control(type='text', name='date-from', id='date-from', value='11-11-2011', placeholder='Date you got there(MM-DD-YYYY)')
+        input.form-control(type='text', name='date-from', id='date-from', value='#{moment(lifeMarker.dates.from).format("DD-MM-YYYY")}', placeholder='Date you got there(MM-DD-YYYY)')
       label.col-sm-3.control-label(for='date-to') Date To
       .col-sm-7
-        input.form-control(type='text', name='date-to', id='date-to', value='11-12-2012', placeholder='Date you left there(MM-DD-YYYY)')
+        input.form-control(type='text', name='date-to', id='date-to', value='#{moment(lifeMarker.dates.to).format("DD-MM-YYYY")}', placeholder='Date you left there(MM-DD-YYYY)')
     .form-group
       label.col-sm-3.control-label(for='location-name') Location Name
       .col-sm-7
-        input.form-control(type='text', name='location-name', id='location-name', value='Austin', placeholder='Give your location a name')
+        input.form-control(type='text', name='location-name', id='location-name', value='#{lifeMarker.location.locationName}', placeholder='Give your location a name')
       label.col-sm-3.control-label(for='location-address') Location Address
       .col-sm-7
-        input.form-control(type='text', name='location-address', id='location-address', value='Austin, Tx', placeholder='Location you went to')
+        input.form-control(type='text', name='location-address', id='location-address', value='#{lifeMarker.location.address}', placeholder='Location you went to')
     .form-group
       label(class='col-sm-2 control-label', for='description') Description
       .col-sm-8
         textarea.form-control(name='description', id='description', rows='7', placeholder='Describe your experience/life event')
+          | #{lifeMarker.description}
     .form-group
       label.col-sm-3.control-label(for='private') Private
       .col-sm-6
         label.radio.col-sm-3
-          input(type='radio', name='private', value='true', data-toggle='radio')
+          input(type='radio', checked=lifeMarker.private==true, name='private', value='true', data-toggle='radio')
           span Private
         label.radio.col-sm-3
-          input(type='radio', name='private', value='false', data-toggle='radio' checked)
+          input(type='radio', checked=lifeMarker.private==false, name='private', value='false', data-toggle='radio')
           span Not Private
     .form-group
       .col-sm-offset-3.col-sm-4
         button.btn.btn.btn-primary(type='submit')
           i.fa.fa-pencil
-          | Create Life Marker
+          | Update Life Marker
