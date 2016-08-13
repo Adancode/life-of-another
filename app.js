@@ -90,6 +90,7 @@ app.use((req, res, next) => {
 });
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
+//Passes user to all jade files so logged in User can be accessed
 app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
